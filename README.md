@@ -11,6 +11,8 @@ __Returns__ a class (i.e. function).
 
 #### Examples
 
+In browser:
+
 ~~~js
 var Person = Object.classFactory(function () {
         this.constructor = function (name, age) {
@@ -40,6 +42,10 @@ monkey.getName(); // Code Monkey
 monkey.getAge(); // 20
 monkey.getLanguage(); // JavaScript
 ~~~
+
+In Node.js:
+
+You can import classFactory by, for example, `var classFactory = require('class-factory-js');`. Then `var Person = classFactory(...)`.
 
 #### License
 
