@@ -11,29 +11,53 @@
 ( function () {
   var hasOwn = Object.prototype.hasOwnProperty;
 
-  return function classFactory(parent, define) {
-      if (typeof parent !== 'function') {
-        throw TypeError(parent + ' is not a function');
+  function clone(o) {
+    if (o === null || o === undefined || typeof o !== 'object') {
+      return o;
+    }
+    var temp = o.constructor();
+    for (var k in o) {
+      if (hasOwn.call(o, k)) {
+        temp[k] = clone(o[k]);
+      }
+    }
+    return temp;
+  }
+
+  function extend(a, b) {
+    for (var k in b) {
+      a[k] = clone(b[k]);
+    }
+    return a;
+  }
+
+  return function classFactory(parents, define) {
+      if (typeof parents !== 'function' &&
+          Object.prototype.toString.call(parents) !== '[object Array]') {
+        throw TypeError(parents + ' is neither a function nor an array');
       }
 
       if (typeof define !== 'function') {
-        define = parent;
-        parent = undefined;
+        define = parents;
+        parents = [];
       }
 
-      // Define an empty class.
+      // Make sure parents is an array.
+      parents = [].concat(parents);
+
       var F,
         proto = {};
 
-      define.call(proto, parent);
+      define.apply(proto, parents);
       if (!hasOwn.call(proto, 'constructor')) {
         proto.constructor = function() {};
       }
       F = proto.constructor;
 
-      if (typeof parent === 'function') {
-        F.prototype = new parent();
+      for (var i = 0, l = parents.length; i !== l; ++i) {
+        F.prototype = extend(F.prototype, parents[i].prototype);
       }
+
       for (var k in proto) {
         if (hasOwn.call(proto, k)) {
           F.prototype[k] = proto[k];

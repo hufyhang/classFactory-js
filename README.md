@@ -2,11 +2,11 @@
 
 An ES6-inspired API to create "classes" in ES5.
 
-#### Object.classFactory([parent, ] definition)
+#### Object.classFactory([parents, ] definition)
 
 __Returns__ a class (i.e. function).
 
-+ `parent`: __[optional]__ Parent class (i.e. function).
++ `parent`: __[optional]__ Parent classes (i.e. function) in the form of an array of a standalone function.
 + `definition`: A callback function used to create the class.
 
 #### Examples
@@ -28,7 +28,7 @@ var guy = new Person('Someone', 10);
 guy.getName(); // Someone
 guy.getAge(); // 10
 
-var Coder = Object.classFactory(Person, function (P) { // P becomes the shorthand of Person
+var Coder = Object.classFactory([Person, AnotherClass], function (P) { // P becomes the shorthand of Person
         this.constructor = function (name, age, language) {
             P.call(this, name, age);
             this.language = language;
