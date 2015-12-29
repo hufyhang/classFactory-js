@@ -43,7 +43,7 @@
       }
 
       // Make sure parents is an array.
-      parents = [].concat(parents);
+      var supers = parents = [].concat(parents);
 
       try {
         parents = Array.prototype.map.call(parents, function (parent) {
@@ -51,6 +51,16 @@
         });
       } catch (e) {
         throw TypeError('Invalid parent function');
+      }
+
+      // Attach all parents of supers to obtain a complete 'parent' chain.
+      for (var i = 0, l = supers.length; i !== l; ++i) {
+        var tempSuper = supers[i].parents;
+        for (var ii = 0, ll = tempSuper.length; ii !== ll; ++ii) {
+          if (supers.indexOf(tempSuper[ii]) === -1) {
+            supers = supers.concat(tempSuper[ii]);
+          }
+        }
       }
 
       var F,
@@ -72,16 +82,23 @@
         }
       }
 
-      return {
+      F.prototype.instanceOf = function instanceOf(o) {
+        return classObj !== o && supers.indexOf(o) === -1 ? false : true;
+      };
+
+      // Class object
+      var classObj = {
         constructor: F,
         definition: define,
-        parents: parents,
+        parents: supers,
         create: function () {
           var args = Array.prototype.slice.call(arguments);
           args = [F].concat(args);
           return new (Function.prototype.bind.apply(F, args))();
         }
       };
+
+      return classObj;
     };
 
 } )()

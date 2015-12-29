@@ -6,7 +6,7 @@ An ES6-inspired API to create "classes" in ES5.
 
 __Returns__ a class (i.e. function).
 
-+ `parent`: __[optional]__ Parent classes (i.e. function) in the form of an array of a standalone function.
++ `parents`: __[optional]__ Parent classes (i.e. function) in the form of an array.
 + `definition`: A callback function used to create the class.
 
 ##### Class Object
@@ -17,6 +17,10 @@ The class obejct created by `classFactory` contains the follows properties:
 + `definition`: The function used to define the class.
 + `parents`: An array of parent class object.
 + `create(...)`: The method for creating instances.
+
+##### Class Instance
+
+Each instance of class contains a `.instanceOf(classObject)` function, which allows to check if an object is the instance of a class.
 
 #### Examples
 
@@ -50,6 +54,9 @@ var monkey = Coder.create('Code Monkey', 20, 'JavaScript');
 monkey.getName(); // Code Monkey
 monkey.getAge(); // 20
 monkey.getLanguage(); // JavaScript
+
+monkey.instanceOf(Coder); // true
+monkey.instanceOf(Person); // true
 ~~~
 
 ##### In Node.js:
