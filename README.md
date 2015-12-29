@@ -2,16 +2,25 @@
 
 An ES6-inspired API to create "classes" in ES5.
 
-#### Object.classFactory([parents, ] definition)
+#### [Object.]classFactory([parents, ] definition)
 
 __Returns__ a class (i.e. function).
 
 + `parent`: __[optional]__ Parent classes (i.e. function) in the form of an array of a standalone function.
 + `definition`: A callback function used to create the class.
 
+##### Class Object
+
+The class obejct created by `classFactory` contains the follows properties:
+
++ `constructor`: The class constructor.
++ `definition`: The function used to define the class.
++ `parents`: An array of parent class object.
++ `create(...)`: The method for creating instances.
+
 #### Examples
 
-In browser:
+##### In browser:
 
 ~~~js
 var Person = Object.classFactory(function () {
@@ -24,7 +33,7 @@ var Person = Object.classFactory(function () {
         this.getAge = function () {return this.age;};
     });
 
-var guy = new Person('Someone', 10);
+var guy = Person.create('Someone', 10);
 guy.getName(); // Someone
 guy.getAge(); // 10
 
@@ -37,13 +46,13 @@ var Coder = Object.classFactory([Person, AnotherClass], function (P) { // P beco
         this.getLanguage = function () {return this.language;};
     });
 
-var monkey = new Coder('Code Monkey', 20, 'JavaScript');
+var monkey = Coder.create('Code Monkey', 20, 'JavaScript');
 monkey.getName(); // Code Monkey
 monkey.getAge(); // 20
 monkey.getLanguage(); // JavaScript
 ~~~
 
-In Node.js:
+##### In Node.js:
 
 You can import classFactory by, for example, `var classFactory = require('class-factory-js');`. Then `var Person = classFactory(...)`.
 

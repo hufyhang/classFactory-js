@@ -1,6 +1,6 @@
 {
   "name": "class-factory-js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An ES6-inspired API for defining classes in ES5.",
   "main": "classFactory.js",
   "repository": {

@@ -45,6 +45,14 @@
       // Make sure parents is an array.
       parents = [].concat(parents);
 
+      try {
+        parents = Array.prototype.map.call(parents, function (parent) {
+          return parent.constructor;
+        });
+      } catch (e) {
+        throw TypeError('Invalid parent function');
+      }
+
       var F,
         proto = {};
 
@@ -64,7 +72,16 @@
         }
       }
 
-      return F;
+      return {
+        constructor: F,
+        definition: define,
+        parents: parents,
+        create: function () {
+          var args = Array.prototype.slice.call(arguments);
+          args = [F].concat(args);
+          return new (Function.prototype.bind.apply(F, args))();
+        }
+      };
     };
 
 } )()
