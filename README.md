@@ -2,6 +2,12 @@
 
 An ES6-inspired API to create "classes" in ES5.
 
+#### Features
+
++ Class
++ (Multiple) Inheritance
++ Abstract method/class
+
 #### [Object.]classFactory([parents, ] definition)
 
 __Returns__ a class (i.e. function).
@@ -62,6 +68,47 @@ monkey.instanceOf(Person); // true
 ##### In Node.js:
 
 You can import classFactory by, for example, `var classFactory = require('class-factory-js');`. Then `var Person = classFactory(...)`.
+
+#### Abstract methods
+
+The below example shows how to define and implement abstract method.
+
+~~~js
+var Person = Object.classFactory(function () {
+  this.constructor = function (name, age) {
+    this.name = name;
+    this.age = age;
+  };
+
+  this.abstract.getName = function () {};
+  this.abstract.setName = function (name) {};
+});
+
+Person.create() // TypeError: Person is an abstract class.
+
+var Boy = Object.classFactory([Person], function (P) {
+  this.constructor = function (name, age) {
+    P.call(this, name, age);
+  };
+
+  this.getName = function () {
+    return this.name;
+  };
+
+  this.setName = function (name) {
+    this.name = name;
+    return this;
+  };
+
+  this.toString = function () {
+    return this.name + ' is now ' + this.age + '-year old.';
+  };
+});
+
+var boy = Boy.create('Pretty Boy', 1);
+~~~
+
+Notice that a `TypeError` will be thrown if not all the abstract methods are implemented.
 
 #### License
 

@@ -11,6 +11,17 @@
 ( function () {
   var hasOwn = Object.prototype.hasOwnProperty;
 
+  function keys(o) {
+    if (o === null || o === undefined) {
+      return 0;
+    }
+    var res = [];
+    for (var k in o) {
+      res = res.concat(k);
+    }
+    return res;
+  }
+
   function clone(o) {
     if (o === null || o === undefined || typeof o !== 'object') {
       return o;
@@ -64,7 +75,9 @@
       }
 
       var F,
-        proto = {};
+        proto = {
+          abstract: {}
+        };
 
       define.apply(proto, parents);
       if (!hasOwn.call(proto, 'constructor')) {
@@ -88,10 +101,28 @@
 
       // Class object
       var classObj = {
+        abstract: proto.abstract,
         constructor: F,
         definition: define,
         parents: supers,
         create: function () {
+          // If try to instantiate an abstract class, throw error.
+          if (keys(this.abstract).length > 0) {
+            throw TypeError(this + ' is an abstract class.');
+          }
+
+          // Check if all abstract functions from parents are implemented.
+          var p, methods = keys(proto);
+          for (var i = 0, l = this.parents.length; i !== l; ++i) {
+            p = this.parents[i];
+            for (var ab in p.abstract) {
+              if (methods.indexOf(ab) === -1 ||
+                  p.abstract[ab].length !== proto[ab].length) {
+                throw TypeError('Abstract function ' + ab + ' is not properly implemented.');
+              }
+            }
+          }
+
           var args = Array.prototype.slice.call(arguments);
           args = [F].concat(args);
           return new (Function.prototype.bind.apply(F, args))();
