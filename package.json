@@ -1,6 +1,6 @@
 {
   "name": "class-factory-js",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An ES6-inspired API for defining classes in ES5.",
   "main": "classFactory.js",
   "repository": {
@@ -12,7 +12,10 @@
     "javascript",
     "ES6",
     "ES5",
-    "factory"
+    "factory",
+    "inheritance",
+    "multiple inheritance",
+    "abstract"
   ],
   "author": "Feifei Hang <l.daniel.hung@gmail.com> (http://feifeihang.github.io/)",
   "license": "MIT",
