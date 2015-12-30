@@ -71,7 +71,7 @@ You can import classFactory by, for example, `var classFactory = require('class-
 
 #### Abstract methods
 
-The below example shows how to define and implement abstract method.
+The below example shows how to define and implement abstract method. All _abstract_ methods should be defined under `this.abstract` property.
 
 ~~~js
 var Person = Object.classFactory(function () {
