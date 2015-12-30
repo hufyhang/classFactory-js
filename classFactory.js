@@ -99,6 +99,19 @@
         return classObj !== o && supers.indexOf(o) === -1 ? false : true;
       };
 
+      // Check if all abstract functions from parents are implemented.
+      var p, methods = keys(proto);
+      for (var i = 0, l = supers.length; i !== l; ++i) {
+        p = supers[i];
+        for (var ab in p.abstract) {
+          if (methods.indexOf(ab) === -1 ||
+              p.abstract[ab].length !== proto[ab].length) {
+            throw TypeError('Abstract function ' + ab + ' is not properly implemented.');
+          }
+        }
+      }
+
+
       // Class object
       var classObj = {
         abstract: proto.abstract,
@@ -109,18 +122,6 @@
           // If try to instantiate an abstract class, throw error.
           if (keys(this.abstract).length > 0) {
             throw TypeError(this + ' is an abstract class.');
-          }
-
-          // Check if all abstract functions from parents are implemented.
-          var p, methods = keys(proto);
-          for (var i = 0, l = this.parents.length; i !== l; ++i) {
-            p = this.parents[i];
-            for (var ab in p.abstract) {
-              if (methods.indexOf(ab) === -1 ||
-                  p.abstract[ab].length !== proto[ab].length) {
-                throw TypeError('Abstract function ' + ab + ' is not properly implemented.');
-              }
-            }
           }
 
           var args = Array.prototype.slice.call(arguments);
