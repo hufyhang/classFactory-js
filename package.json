@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/hufyhang/classFactory-js/issues"
   },
-  "homepage": "https://github.com/hufyhang/classFactory-js"
+  "homepage": "https://github.com/hufyhang/classFactory-js",
+  "devDependencies": {
+    "should": "^8.0.2"
+  }
 }
