@@ -1,4 +1,4 @@
-### Object.classFactory
+### Object.classFactory [![Build Status](https://travis-ci.org/hufyhang/classFactory-js.svg?branch=master)](https://travis-ci.org/hufyhang/classFactory-js)
 
 An ES6-inspired API to create "classes" in ES5.
 
