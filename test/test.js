@@ -59,6 +59,14 @@ describe('classFactory', function () {
           this.toString = function () {
             return this.getName() + ' loves ' + this.getLanguage();
           };
+
+          this.get.info = function () {
+            return 'Hello world';
+          };
+
+          this.set.info = function (val) {
+            this.language = 'Info: ' + val;
+          };
         });
       });
     });
@@ -103,5 +111,15 @@ describe('classFactory', function () {
       var str = 'Someone loves JavaScript';
       should.equal(programmer.toString(), str);
     });
+
+    it('should correctly define getter', function () {
+      should.equal(programmer.info, 'Hello world');
+    });
+
+    it('should correctly define setter', function () {
+      programmer.info = 'JS';
+      should.equal(programmer.getLanguage(), 'Info: JS');
+    });
+
   });
 });

@@ -7,6 +7,7 @@ An ES6-inspired API to create "classes" in ES5.
 + Class
 + (Multiple) Inheritance
 + Abstract method/class
++ Getters & setters
 
 #### [Object.]classFactory([parents, ] definition)
 
@@ -22,6 +23,9 @@ The class obejct created by `classFactory` contains the follows properties:
 + `constructor`: The class constructor.
 + `definition`: The function used to define the class.
 + `parents`: An array of parent class object.
++ `abstract`: All abstract methods.
++ `get`: Getters.
++ `set`: Setters.
 + `create(...)`: The method for creating instances.
 
 ##### Class Instance
@@ -68,6 +72,36 @@ monkey.instanceOf(Person); // true
 ##### In Node.js:
 
 You can import classFactory by, for example, `var classFactory = require('class-factory-js');`. Then `var Person = classFactory(...)`.
+
+#### Getters & Setters
+
+Getters & setters can be defined through `this.get` and `this.set` in the class definition callback function.
+
+For example:
+
+~~~js
+var Person = Object.classFactory(function () {
+  this.constructor = function (name, age) {
+    this.name = name;
+    this.age = age;
+  };
+
+  // Define a getter
+  this.get.info = function () {
+    return this.name + ' -- ' + this.age;
+  };
+
+  // Define a setter
+  this.set.info = function (val) {
+    this.name = val;
+  };
+});
+
+var p = Person.create('Superhero', 1);
+p.info; // 'Superhero -- 1'
+p.info = 'Superman';
+p.name; // 'Superman'
+~~~
 
 #### Abstract methods
 

@@ -76,7 +76,9 @@
 
       var F,
         proto = {
-          abstract: {}
+          abstract: {},
+          get: {},
+          set: {}
         };
 
       define.apply(proto, parents);
@@ -115,6 +117,8 @@
       // Class object
       var classObj = {
         abstract: proto.abstract,
+        get: proto.get,
+        set: proto.set,
         constructor: F,
         definition: define,
         parents: supers,
@@ -126,7 +130,31 @@
 
           var args = Array.prototype.slice.call(arguments);
           args = [F].concat(args);
-          return new (Function.prototype.bind.apply(F, args))();
+          var o = new (Function.prototype.bind.apply(F, args))();
+          // Define getters and setters.
+          var properties = [];
+          properties = properties.concat(keys(this.get));
+          // First, get all getters and setters' names.
+          var setKeys = keys(this.set);
+          var key;
+          var i, l;
+          for (i = 0, l = setKeys.length; i !== l; ++i) {
+            key = setKeys[i];
+            if (properties.indexOf(key) === -1) {
+              properties = properties.concat(key);
+            }
+          }
+          // Then, iterate through all the names and define properties.
+          var p;
+          for (i = 0, l = properties.length; i !== l; ++i) {
+            p = properties[i];
+            Object.defineProperty(o, p, {
+              get: this.get[p] || function () { return this; },
+              set: this.set[p] || function () { return this; }
+            });
+          }
+
+          return o;
         }
       };
 
