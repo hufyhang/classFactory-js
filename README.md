@@ -8,6 +8,7 @@ An ES6-inspired API to create "classes" in ES5.
 + (Multiple) Inheritance
 + Abstract method/class
 + Getters & setters
++ Static
 
 #### [Object.]classFactory([parents, ] definition)
 
@@ -101,6 +102,24 @@ var p = Person.create('Superhero', 1);
 p.info; // 'Superhero -- 1'
 p.info = 'Superman';
 p.name; // 'Superman'
+~~~
+
+#### Static
+
+`static` is supported by using `this.static`.
+
+For example:
+
+~~~js
+var Person = Object.classFactory(function () {
+  this.static.type = 'Human';
+  this.static.sayHi = function () {
+    return 'Hi';
+  }
+});
+
+Person.type; // 'Human'
+Person.sayHi(); // 'Hi'
 ~~~
 
 #### Abstract methods

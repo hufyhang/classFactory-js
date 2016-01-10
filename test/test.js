@@ -86,6 +86,16 @@ describe('classFactory', function () {
       });
     });
 
+    it('should support static', function () {
+      var Cls = classFactory(function () {
+        this.static.type = 'obj';
+        this.static.sayHi = function () { return 'Hi'; };
+      });
+
+      should.equal(Cls.type, 'obj');
+      should.equal(Cls.sayHi(), 'Hi');
+    });
+
   });
 
   describe('class object', function () {

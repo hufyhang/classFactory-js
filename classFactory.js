@@ -78,7 +78,8 @@
         proto = {
           abstract: {},
           get: {},
-          set: {}
+          set: {},
+          static: {}
         };
 
       define.apply(proto, parents);
@@ -122,6 +123,7 @@
         constructor: F,
         definition: define,
         parents: supers,
+        static: proto.static,
         create: function () {
           // If try to instantiate an abstract class, throw error.
           if (keys(this.abstract).length > 0) {
@@ -157,6 +159,14 @@
           return o;
         }
       };
+
+      // Attach static
+      var st = proto.static;
+      for (var k in st) {
+        if (hasOwn.call(st, k)) {
+          classObj[k] = st[k];
+        }
+      }
 
       return classObj;
     };
