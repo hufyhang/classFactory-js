@@ -1,0 +1,34 @@
+{
+  "name": "class-factory-js",
+  "description": "An ES6-inspired API for defining classes in ES5.",
+  "main": "classFactory.js",
+  "authors": [
+    "Feifei Hang <l.daniel.hung@gmail.com> (http://feifeihang.github.io/)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "class",
+    "javascript",
+    "ES6",
+    "ES5",
+    "factory",
+    "inheritance",
+    "multiple",
+    "inheritance",
+    "abstract",
+    "getter",
+    "setter"
+  ],
+  "homepage": "https://github.com/hufyhang/classFactory-js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
