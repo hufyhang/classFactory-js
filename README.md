@@ -1,4 +1,4 @@
-### Object.classFactory [![Build Status](https://travis-ci.org/hufyhang/classFactory-js.svg?branch=master)](https://travis-ci.org/hufyhang/classFactory-js)
+### classFactory [![Build Status](https://travis-ci.org/hufyhang/classFactory-js.svg?branch=master)](https://travis-ci.org/hufyhang/classFactory-js)
 
 An ES6-inspired API to create "classes" in ES5.
 
@@ -9,6 +9,20 @@ An ES6-inspired API to create "classes" in ES5.
 + Abstract method/class
 + Getters & setters
 + Static
+
+#### Installation
+
+##### Browser
+
+Import `classFactory.js` through `<script src="path/to/classFactory.js"></script>`.
+
+Then, access class factory by `Object.classFactory`.
+
+##### Node.JS
+
+~~~js
+var classFactory = require('class-factory-js');
+~~~
 
 #### [Object.]classFactory([parents, ] definition)
 
